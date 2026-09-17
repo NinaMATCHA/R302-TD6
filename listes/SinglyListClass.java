@@ -129,13 +129,17 @@ public class SinglyListClass {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
+        StringBuilder sb = new StringBuilder("List[size:" + size + ",elements:");
         Node current = header;
         while (current != null) {
-            sb.append(current.getElement()).append(" -> ");
+            if (current.getNext() == null) {
+                sb.append(current.getElement());
+                break;
+            }
+            sb.append(current.getElement()).append("-");
             current = current.getNext();
         }
-        sb.append("null");
+        sb.append("]");
         return sb.toString();
     }
 
@@ -154,6 +158,8 @@ public class SinglyListClass {
 
         System.out.println(list.toString());
         System.out.println(list.size());
+
+        
     }
 
 }
