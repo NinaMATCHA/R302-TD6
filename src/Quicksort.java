@@ -2,37 +2,52 @@ package tp6;
 import java.util.ArrayList;
 
 public class Quicksort {
+    // methode Lomuto p118 cm
 
-    private static int partitionnement(ArrayList<Integer> list, int inf, int sup) {
-        int pivot = list.get(sup);
-        int i = inf - 1;
-        int n = list.size();
-        if(n < 2)
-            return -1;
-        for (int j = inf; j < sup; j++) {
+    // DIVIDE
+    public static void tris(ArrayList<Integer> list) {
+        if (list == null || list.size() < 2) {
+            return;
+        }
+        quicksort(list, 0, list.size() - 1);
+    }
+
+    private static int partition(ArrayList<Integer> list, int deb, int fin) {
+        int pivot = list.get(fin);
+        for (int j = deb; j < fin; j++) {
             if (list.get(j) <= pivot) {
+                swap(list, i, j);
                 i++;
-                int tmp = list.get(i);
-                list.set(i, list.get(j));
-                list.set(j, tmp);
             }
         }
-        int tmp = list.get(i + 1);
-        list.set(i + 1, list.get(sup));
-        list.set(sup, tmp);
-        return i + 1;
+
+        swap(list, i, fin);
+        return i;
     }
 
-    private static void quickSort(ArrayList<Integer> list, int inf, int sup) {
-        if (inf < sup) {
-            int part = partitionnement(list, inf, sup);
-            quickSort(list, inf, part - 1);
-            quickSort(list, part + 1, sup);
+    private static void swap(ArrayList<Integer> list, int i, int j) {
+        int temp = list.get(i);
+        list.set(i, list.get(j));
+        list.set(j, temp);
+    }
+    
+    //CONQUER
+    private static void quicksort(ArrayList<Integer> list, int deb, int fin) {
+        if (deb < fin) {
+            int indexPivot = partition(list, deb, fin);
+            quicksort(list, deb, indexPivot - 1);
+            quicksort(list, indexPivot + 1, fin);
         }
     }
 
-    public static void quickSort(ArrayList<Integer> list) {
-        quickSort(list, 0, list.size() - 1);
-    }
+    private static void main(String[] args) {
+        ArrayList<Integer> list = new ArrayList<>();
+        list.add(3);
+        list.add(6);
+        list.add(8);
 
+        System.out.println("list avant le tris : " + list);
+        tris(list);
+        System.out.println("list après le tris : " + list);
+    }
 }
